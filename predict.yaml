@@ -1,0 +1,34 @@
+# @package _global_
+
+defaults:
+  # override config either in this file or using experiment config
+  - _self_
+  - experiment: null # experiment configs allow for version control of specific hyperparameters
+
+
+# Setting
+batch_size: 16
+n_beams: 10
+n_unique_beams: null
+n_gpus: 1
+
+# Data
+data_path: molbart/data/B3DB/B3DB/B3DBsim_external_test.tsv 
+vocabulary_path: bart_vocab_downstream.json
+task: classification    # ["forward_prediction", "backward_prediction", "mol_opt", "classification"]
+i_chunk: 0
+n_chunks: 1
+data_device: cuda
+output_dir: chemformer_predictions
+
+# Model
+model_path: B3DB_Avg_Pooling.ckpt 
+model_type: classifier            # ["bart", "unified", or "classifier"]
+dataset_part: "test"      # ["full", "train", "val", "test"]
+train_mode: eval
+
+datamodule:
+  - molbart.data.base.B3DBDataModule #NeuToxDataModule  #B3DBDataModule or BBBPDataModule 
+# Chekpoint names
+  # B3DB_Avg_Pooling.ckpt, NeuTox_Avg_Pooling.ckpt
+
